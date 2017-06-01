@@ -1,0 +1,87 @@
+<html>
+	<header>
+		<meta name="theme-color" content="#000000" />
+	</header>
+	<style>
+		.content{
+			vertical-align:bottom;
+			text-align:center;
+			color:#ffffff;
+			font:14px Verdana;
+			text-shadow: 1px 0 1 #000000, 1px 0 -1 #000000;
+		}
+	</style>
+	<script>
+		function Event(imageIndex, text){
+			this.image = images[imageIndex];
+			this.text = text;
+			return this;
+		}
+		var numFrames = 0;
+		var images = new Array();
+		var events = new Array();
+		var currentEvent = 0;
+		
+		function frame(imageIndex, text){			
+			events[numFrames] = new Event(imageIndex, text);
+			numFrames++;
+		}
+		
+		function preload() {
+			for (i = 0; i < preload.arguments.length; i++) {
+				images[i] = new Image();
+				images[i].src = preload.arguments[i];
+			}
+		}
+		preload(
+			"land0001.jpg",
+			"land0002.jpg",
+			"land0003.jpg"
+		)
+		
+		frame(0, 'Habia una vez');
+		frame(0, 'En un campo verde');
+		frame(1, 'En es otro campo verde');
+		
+		function setFrame(){
+			var w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+			var h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+			var iFrame = document.getElementById('tLayout');
+			var iText = document.getElementById('tText');
+			iFrame.style.backgroundImage = "url('"+events[currentEvent].image.src+"')";
+			iText.innerHTML = events[currentEvent].text;
+			dx = w;
+			dy = (w*360)/640;
+			if (dy>h){
+				dx = (h*640)/360;
+				dy = h;
+			}
+			iFrame.style.width = dx;
+			iFrame.style.height = dy;
+			iFrame.style.position = 'absolute';
+			iFrame.style.top = 0;
+			iFrame.style.left = (w-dx)/2;
+		}
+		
+		function move(step){
+			var futureFrame = currentEvent + step;
+			if (futureFrame<0 || futureFrame>=events.length){
+				return;
+			}
+			currentEvent = futureFrame;
+			setFrame();
+		}		
+	</script>
+	<body style="background:#000000;margin:0px" onresize="setFrame()">
+		<table id="tLayout" style="width:640;height:360;background-size: 100%;">
+			<tr>
+				<td onclick="move(-1)" style="cursor:pointer">&lt;</td>
+				<td class="content"><div id="tText">&nbsp;</div></td>
+				<td onclick="move(1)" style="cursor:pointer">&gt;</td>
+			</tr>
+		</table>
+		<script>
+			setFrame();
+		</script>
+	</body>
+</html>
