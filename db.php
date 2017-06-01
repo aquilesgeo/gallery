@@ -1,6 +1,8 @@
 <?php
 	session_start();
 	
+	define("IMAGE_BASE","./")
+	
 	if (!isset($public)){
 		if (!isset($_SESSION["user"])){
 			header("Location: index.php");
