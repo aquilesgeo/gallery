@@ -6,11 +6,11 @@
 	
 	$fileName = "$IMAGE_BASE/$book/$image";
 	if (file_exists($fileName)) {
-    header('Content-Description: File Transfer');
-    header('Content-Type: application/octet-stream');    
-    header('Content-Length: ' . filesize($file));
-    readfile($file);
-    exit;
-}
+		header('Content-Description: File Transfer');
+		header('Content-Type: application/octet-stream');    
+		header('Content-Length: ' . filesize($file));
+		readfile($file);
+		exit;
+	}
 
     ?>

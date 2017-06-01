@@ -1,6 +1,6 @@
 <?php
 	include "db.php";
-	$id = $_GET["id"];
+	$id = $_GET["b"];
 ?>
 <html>
 	<header>
